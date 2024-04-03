@@ -12,7 +12,7 @@ const AppLayout = ({ children, header }) => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-blue-100">
             <Navigation user={user} />
 
             <main>{children}</main>
