@@ -1,34 +1,27 @@
-// 'use client'
 
 import Header from '@/app/(app)/Header'
 import MoviesList from '@/components/MoviesList'
-// import { useEffect } from 'react'
-
-
 
 
 export const metadata = {
     title: 'Laravel - Home',
 }
 
-async function getAllPopularMovies() {
+// async function getAllPopularMovies() {
 
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/getPopularMovies`, {
-        cache: "no-store", //ssr
-    })
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_FRONT_URL}/api/getPopularMovies`, {
+//         cache: "no-store", //ssr
+//     })
 
-    // (`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_API_KEY}&language=ja=JP`, {
-    //     cache: "no-store", //ssr
-    // })
 
-    const allPopularMovies = await response.json()
+//     const allPopularMovies = await response.json()
 
-    console.log(allPopularMovies)
+//     console.log(allPopularMovies)
 
-    return allPopularMovies
+//     return allPopularMovies
 
-}
+// }
 
 
 

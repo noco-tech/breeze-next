@@ -3,6 +3,7 @@
     "dockerComposeFile": "../../docker-compose.yml",
     "service": "nextjs_app",
     "workspaceFolder": "/app",
+    // "forwardPorts": [3000],
     "customizations": {
         "vscode": {
             "extensions": [

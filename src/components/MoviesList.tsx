@@ -6,8 +6,8 @@ import useSWR from 'swr'
 import { Swiper, SwiperSlide } from 'swiper/react'
 // Import Swiper styles
 import 'swiper/css'
-
-
+import Link from 'next/link'
+import { SearchBar } from './SearchBar'
 
 // async function fetcher(key: string) {
 //    return fetch(key).then((res) => res.json())
@@ -19,13 +19,19 @@ const fetcher = (url: string): Promise<any> =>
 const MoviesList = () => {
     // const [movies, setMovies] = useState([])
 
-    const {data, error} = useSWR(
-        `${process.env.NEXT_PUBLIC_FRONT_URL}/api/getPopularMovies`, fetcher
+    const { data, error } = useSWR(
+        `${process.env.NEXT_PUBLIC_FRONT_URL}/api/getPopularMovies`,
+        fetcher,
     )
+    if (!data) {
+        return
+    }
     // console.log(data)
 
-    if (error) return <div className='text-center'>Loading Failed</div>
-    if (!data) return <div className='text-center'>読み込み中...</div>
+    if (error) return <div className="text-center">Loading Failed</div>
+    if (!data) return <div className="text-center">読み込み中...</div>
+
+
 
     // useEffect(() => {
     //     const fetchMovies = async () => {
@@ -45,14 +51,16 @@ const MoviesList = () => {
     //     fetchMovies()
     // }, [])
 
-
     return (
         <div>
+            <SearchBar />
+
+
             <Swiper
                 spaceBetween={30}
                 slidesPerView={3}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={swiper => console.log(swiper)}
+                // onSlideChange={() => console.log('slide change')}
+                // onSwiper={swiper => console.log(swiper)}
                 breakpoints={{
                     // 320以上
                     320: {
@@ -73,15 +81,18 @@ const MoviesList = () => {
                         spaceBetween: 40,
                     },
                 }}>
-                {/* dataが取得できていとmapでエラー出る為、data && をつける*/}
-                {data && data.data.results.map(movie => (
+                {/* dataが取得できていとmapでエラー出る為、data && か ? をつける*/}
+                {data?.data.results.map(movie => (
                     <SwiperSlide key={movie.id}>
-                        <img
-                            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                        />
+                        <Link href={`Detail/movie/${movie.id}`}>
+                            <img
+                                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                            />
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>
+
         </div>
     )
 }
