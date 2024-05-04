@@ -4,13 +4,15 @@
 import Header from '@/app/(app)/Header'
 import { Box, Container, Grid, Typography } from '@mui/material'
 
+import laravelAxios from '@/lib/laravelAxios'
+import LaravelFetch from '@/components/LaravelFetch'
+
 // const fetcher = (url: string): Promise<any> =>
 //   fetch(url).then(res => res.json())
 
 export const metadata = {
     title: 'Laravel - Detail',
 }
-
 
 async function getDetailData(media_type: string, media_id: string) {
     try {
@@ -64,6 +66,25 @@ async function getDetailUSData(media_type: string, media_id: string) {
     }
 }
 
+// laravelのaxiosからデータを取得
+async function fetchReviews(media_type: string, media_id: string) {
+    try {
+        const res = await laravelAxios.get(
+            `api/reviews/${media_type}/${media_id}`,
+        )
+        await laravelAxios.get('/sanctum/csrf-cookie')
+
+        if (!res) {
+            return
+        }
+
+        return await res
+    } catch (error) {
+        console.error('Failed to fetch data', error)
+        throw error
+    }
+}
+
 const Detail = async ({
     params,
 }: {
@@ -86,11 +107,16 @@ const Detail = async ({
         combinedData.overview = usDetail.overview
     }
 
-    // console.log(detail)
+    // laravelからデータ取得
+    // const fetchReviewsData = await fetchReviews(media_type, media_id)
+
+    // const reviews = await fetchReviewsData
+
 
     return (
         <div>
             <Header title="Detail" />
+
             <Box
                 sx={{
                     height: { xs: 'auto', md: '70vh' },
@@ -149,12 +175,19 @@ const Detail = async ({
                             </Typography>
 
                             <Typography>
-                                {media_type == 'movie' ? `公開日: ${detail.release_date}` : `初回放送日: ${detail.first_air_date}`}
+                                {media_type == 'movie'
+                                    ? `公開日: ${detail.release_date}`
+                                    : `初回放送日: ${detail.first_air_date}`}
                             </Typography>
                         </Grid>
                     </Grid>
                 </Container>
             </Box>
+
+            {/* レビュー内容を表示 */}
+            <LaravelFetch />
+            {/* 投稿機能 */}
+            
         </div>
     )
 }
