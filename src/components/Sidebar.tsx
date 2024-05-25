@@ -17,7 +17,7 @@ const Sidebar = () => {
         }))
 
 
-console.log(category)
+// console.log(category)
     return (
         <div>
             <Typography

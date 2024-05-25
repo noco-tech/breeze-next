@@ -3,17 +3,16 @@
 import { createContext, useContext, useRef } from 'react'
 import { createStore, useStore } from 'zustand'
 
-
-const defaultValue = 'all'
+const defaultValue = 0
 
 const StoreContext = createContext(null)
 
-const StoreProvider = ({ children }) => {
+const AverageProvider = ({ children }) => {
     const storeRef = useRef()
     if (!storeRef.current) {
         storeRef.current = createStore(set => ({
-            category: defaultValue,
-            setCategory: category => set({ category })
+            average: defaultValue,
+            setAvegage: average => set({ average }),
         }))
     }
     return (
@@ -31,5 +30,4 @@ export const useStoreInContext = selector => {
     return useStore(store, selector)
 }
 
-export default StoreProvider
-
+export default AverageProvider

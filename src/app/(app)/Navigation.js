@@ -36,9 +36,9 @@ const Navigation = ({ user }) => {
                                 Dashboard ドラえもん
                             </NavLink>
                             <NavLink
-                                href="/sample"
-                                active={usePathname() === '/sample'}>
-                                sample
+                                href="/favorites"
+                                active={usePathname() === '/favorites'}>
+                                お気に入り
                             </NavLink>
                         </div>
                     </div>
